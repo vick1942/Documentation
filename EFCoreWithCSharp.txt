@@ -1,2 +1,110 @@
 Entity Framework with C#
 
+Controller.cs
+-------------
+    [ApiController]
+    [Route("[controller]")]
+    public class WeatherForecastController : ControllerBase
+    {
+        public readonly YourDBContext _yourdbContext;
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(YourDBContext dbContext, ILogger<WeatherForecastController> logger)
+        {
+            _yourdbContext = dbContext;
+            _logger = logger;
+        }
+
+        [HttpGet(Name = "GetWeatherForecast")]
+        public IEnumerable<dynamic> Get()
+        {
+            var roleList = _yourdbContext.Roles.ToList();
+            var userList = _yourdbContext.Users.Where(x=>x.FirstName.Contains("Raja"));
+
+            return roleList;
+        }
+
+
+YourDBContext.cs
+----------------
+
+public class YourDBContext : DbContext
+{
+    public DbSet<User> Users { get; set; }
+    public DbSet<OCLIST> OCLISTS { get; set; }
+    public DbSet<Role> Roles { get; set; }
+
+    public YourDBContext(DbContextOptions<YourDBContext> options)
+   : base(options)
+    {
+
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Use singular names for DBSet properties and map them to pluralized table names
+        modelBuilder.Entity<User>().ToTable("User");
+        modelBuilder.Entity<OperationCenter>().ToTable("OperationCenter");
+        modelBuilder.Entity<Role>().ToTable("Role");
+        modelBuilder.Entity<User>().Property(p => p.UserId).HasColumnName("UserId").UseIdentityColumn(1, 1);
+        modelBuilder.Entity<User>().Property(p => p.Alias).HasColumnName("Alias");
+        base.OnModelCreating(modelBuilder);
+    }
+
+}
+
+Program.cs
+---------
+
+builder.Services.AddDbContext<YourDBContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration["ConnectionString:DB"]);
+    options.EnableSensitiveDataLogging(true);
+    options.EnableDetailedErrors(true);
+});
+builder.Services.AddScoped<YourDBContext>();
+
+AppSettings.cs
+--------------
+
+  "ConnectionString": {
+    "DB": "Server=Server;Database=db;Trusted_Connection=True;User ID=sa;Password=Password1;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False;"
+  },
+
+Models
+------
+
+public abstract class BaseEntity
+{
+    public int CreatedBy { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public int ModifiedBy { get; set; }
+    public DateTime ModifiedDate { get; set; }
+}
+
+
+public partial class User : BaseEntity
+{
+    public int UserId { get; set; }
+    public string Alias { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public bool IsActive { get; set; }
+    public int OCKEY { get; set; }
+   
+    public virtual OCLIST OCLIST { get; set; }
+}
+
+public partial class OCLIST : BaseEntity
+{
+    public int OCKEY { get; set; }
+    public string Code { get; set; }
+    public string Name { get; set; }
+}
+
+
+public class Role : BaseEntity
+{
+    public int Id { get; set; }
+    public string RoleName { get; set; }
+}
