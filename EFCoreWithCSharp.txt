@@ -44,7 +44,7 @@ public class YourDBContext : DbContext
     {
         // Use singular names for DBSet properties and map them to pluralized table names
         modelBuilder.Entity<User>().ToTable("User");
-        modelBuilder.Entity<OperationCenter>().ToTable("OperationCenter");
+        modelBuilder.Entity<OCLIST>().ToTable("OCLIST");
         modelBuilder.Entity<Role>().ToTable("Role");
         modelBuilder.Entity<User>().Property(p => p.UserId).HasColumnName("UserId").UseIdentityColumn(1, 1);
         modelBuilder.Entity<User>().Property(p => p.Alias).HasColumnName("Alias");
