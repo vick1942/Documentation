@@ -1,0 +1,42 @@
+Database and folder structure:
+
+ProjectName
+├── .gitignore
+├── src
+│   ├── app
+│   │   └── ReadME.md
+│   ├── api
+│   │   └── ReadME.md
+│   └── shared
+│       └── ReadME.md
+└── sql
+    ├── tables
+    │   └── tables1.sql
+    ├── views
+    │   └── views.sql
+    ├── stored_procedures
+    │   └── storedprocedures1.sql
+    ├── functions
+    │   └── functions1.sql
+    ├── types
+    │   └── types1.sql
+    ├── data
+    │   ├── domain1.sql
+    │   └── domain2.sql
+    ├── security
+    │   ├── roles
+    │   └── access policies
+    │       ├── dev
+    │       ├── qa
+    │       ├── uat
+    │       └── prod
+    └── release
+        ├── release 1.0.0
+        │   ├── release_1.0.0.sql
+        │   └── rollback_release_1.0.0.sql
+        └── release 2.0.0
+            ├── release_2.0.0.sql
+            ├── rollback_release 2.0.0.sql
+            └── hotfix_release 2.0.1.sql
+
+
