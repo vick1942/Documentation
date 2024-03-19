@@ -1,0 +1,48 @@
+OnionArchitecture for API
+
+api
+├── core
+│   ├── ApplicationService
+│   │   ├── ApplicationServiceManager.cs
+│   │   └── UserAppService.cs
+│   ├── ApplicatioNService.Abstraction
+│   │   ├── IApplicationServiceManager.cs
+│   │   └── IUserAppService.cs
+│   ├── Domain
+│   │   ├── Entity
+│   │   │   └── BaseEntity
+│   │   └── Repository
+│   │       ├── IRepositoryManager.cs
+│   │       ├── IUnitOfWork.cs
+│   │       └── IUserRepository.cs
+│   ├── DomainContract
+│   │   └── DTO
+│   │       └── UserDto.cs
+│   ├── DomainService
+│   │   ├── ServiceManager.cs
+│   │   └── UserService.cs
+│   └── DomainService.Abstraction      
+│       ├── IServiceManager.cs
+│       └── IUserService.cs
+├── Infrastructure
+│   ├── Common
+│   │   └── Mapper
+│   │       └── MapperProfile.cs
+│   ├── InfraService
+│   │   └── KeyVault.cs
+│   ├── InfraService.Abstraction
+│   │   └── IKeyVault.cs
+│   └── Persistance     
+│       ├── Configuration
+│       │   └── UserConfiguration.cs
+│       ├── Repository
+│       │   ├── RepositroyManager.cs
+│       │   └── UserRepository.cs
+│       └── CustomDBContext.cs
+├── Presentation
+│   └── APIService
+│       └── Controller
+└── UnitTest
+    └── EachProjectUnitTests
+
+
